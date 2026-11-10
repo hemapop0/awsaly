@@ -23,6 +23,7 @@ const plateNumber = "وه - ٥٧٩٤";
 const description = document.getElementById("description");
 const sendWhatsApp = document.getElementById("sendWhatsApp");
 const imagesInput = document.getElementById("images");
+const cameraInput = document.getElementById("cameraInput");
 const imagePreview = document.getElementById("imagePreview");
 
 const defaultButtonText = sendWhatsApp.textContent.trim();
@@ -75,24 +76,30 @@ function renderPreview() {
 
 }
 
-imagesInput.addEventListener("change", function () {
+function addFiles(input) {
 
-    const newFiles = Array.from(imagesInput.files);
+    const newFiles = Array.from(input.files);
 
     // نفضّي الـ input علشان نقدر نختار نفس الصورة تاني لو اتمسحت
-    imagesInput.value = "";
+    input.value = "";
 
-    const freeSlots = MAX_IMAGES - selectedFiles.length;
+    const freeSlots = Math.max(MAX_IMAGES - selectedFiles.length, 0);
 
     if (newFiles.length > freeSlots) {
-        alert(`أقصى عدد للصور هو ${MAX_IMAGES}. تم إضافة ${Math.max(freeSlots, 0)} فقط.`);
+        alert(`أقصى عدد للصور هو ${MAX_IMAGES}. تم إضافة ${freeSlots} فقط.`);
     }
 
-    selectedFiles = selectedFiles.concat(newFiles.slice(0, Math.max(freeSlots, 0)));
+    selectedFiles = selectedFiles.concat(newFiles.slice(0, freeSlots));
 
     renderPreview();
 
-});
+}
+
+// من المعرض
+imagesInput.addEventListener("change", () => addFiles(imagesInput));
+
+// من الكاميرا
+cameraInput.addEventListener("change", () => addFiles(cameraInput));
 
 
 // =====================================
@@ -165,11 +172,13 @@ async function uploadImage(file) {
         }
     );
 
+    const data = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-        throw new Error("Upload failed: " + response.status);
+        const reason = (data.error && data.error.message) || ("HTTP " + response.status);
+        throw new Error(reason);
     }
 
-    const data = await response.json();
     return data.secure_url;
 
 }
@@ -231,7 +240,7 @@ sendWhatsApp.addEventListener("click", async function () {
             sendWhatsApp.textContent = defaultButtonText;
 
             alert(
-                "حصلت مشكلة أثناء رفع الصور. اتأكد من النت وجرب تاني."
+                "حصلت مشكلة أثناء رفع الصور.\n\nالسبب: " + error.message
             );
 
             return;

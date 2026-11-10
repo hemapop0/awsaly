@@ -12,13 +12,11 @@
   <body>
     <header class="navbar">
       <div class="logo">أوصلي <span>🚗</span></div>
-      <!-- <p>مساعدتك على الطريق تبدأ من هنا</p> -->
     </header>
 
     <main class="container">
       <section class="hero">
         <div class="hero-text">
-          <!-- <span class="tag">خدمة المساعدة على الطريق</span> -->
           <h1>في مشكلة في العربية؟</h1>
         </div>
 
@@ -78,13 +76,13 @@
                 <span>⚠️</span>
                 <strong>راكن مكاني</strong>
             </label>
+
             <label class="problem-card">
                 <input type="radio" name="problem"
                     value="مشكلة أخرى">
                 <span>❓</span>
                 <strong>مشكلة أخرى</strong>
             </label>
-
 
         </div>
     </section>
@@ -102,7 +100,6 @@
                 id="description"
                 rows="5"
                 placeholder="اكتب تفاصيل المشكلة هنا..."
-               
             ></textarea>
         </div>
     </section>
@@ -112,15 +109,35 @@
         <h2>📷 صور المشكلة</h2>
 
         <p class="section-description">
-            ارفع صورة أو أكثر لتوضيح المشكلة.
+            صوّر المشكلة دلوقتي أو اختار صور من المعرض .
         </p>
 
-        <label for="images" class="upload-area">
-            <span>📸</span>
-            <strong>اضغط لاختيار الصور</strong>
-            <small>يمكنك اختيار أكثر من صورة</small>
-        </label>
+        <div class="upload-options">
 
+            <label for="cameraInput" class="upload-area">
+                <span>📸</span>
+                <strong>تصوير الآن</strong>
+                <small>افتح الكاميرا</small>
+            </label>
+
+            <label for="images" class="upload-area">
+                <span>🖼️</span>
+                <strong>من المعرض</strong>
+                <small>اختار أكثر من صورة</small>
+            </label>
+
+        </div>
+
+        <!-- الكاميرا -->
+        <input
+            type="file"
+            id="cameraInput"
+            accept="image/*"
+            capture="environment"
+            hidden
+        >
+
+        <!-- المعرض -->
         <input
             type="file"
             id="images"
@@ -140,7 +157,6 @@
     </section>
 
 </form>
-      <!-- </section> -->
     </main>
 
     <footer>

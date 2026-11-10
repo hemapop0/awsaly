@@ -390,7 +390,21 @@ footer {
     cursor: pointer;
     transition: 0.3s;
 }
+/* Upload options (camera + gallery) */
 
+.upload-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Disabled send button */
+
+#sendWhatsApp:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+}
 #sendWhatsApp:hover {
     background: #128C7E;
     transform: translateY(-2px);
